@@ -21,3 +21,11 @@ yarn add react-bootstrap bootsrap
 
 yarn add axios
 ```
+
+## How to use
+
+1. Clone
+
+2. npm init (add dependency)
+
+3. npm start or yarn start (run appliaction)
