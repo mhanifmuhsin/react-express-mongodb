@@ -127,7 +127,7 @@ const TambahSiswa = () => {
 
 
                 </Form>
-                <Button variant="secondary" onClick={()=> history.push('./siswa')}>Keluar</Button>
+                <Button variant="secondary" onClick={()=> history.push('/siswa')}>Keluar</Button>
                 <Button variant="primary" onClick={handleSubmit}>Simpan</Button>
             </Container>
         </>

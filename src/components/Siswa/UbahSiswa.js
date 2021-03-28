@@ -1,17 +1,18 @@
 import Axios from 'axios';
-import React, {  useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Button, Container, Form , Row, Col} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 
-const TambahSiswa = () => {
+const UbahSiswa = () => {
     const history = useHistory();
+    const { siswaId } = useParams();
     const [siswa, setSiswa] = useState({
-        kk:'',
-        nik:'',
+        kk: '',
+        nik: '',
         nama: '',
-        tempatLahir:'',
-        tanggalLahir:'',
-        alamat:'',
+        tempatLahir: '',
+        tanggalLahir: '',
+        alamat: '',
         kelas: '',
         provinsi: '',
         kabkota: '',
@@ -21,28 +22,27 @@ const TambahSiswa = () => {
         ayah: '',
         ibu: ''
     })
-
+    
     const handleChange = (e, name) => {
         const value = e.target.value
         setSiswa({ ...siswa, [name]: value })
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await
-                Axios.post('http://localhost:3000/siswa', siswa)
-            const { status, message } = response.data
-            if (status === 'success') {
-                alert(message)
-                history.push('/siswa');
-            } else {
-                alert(message)
-            }
-        } catch (error) {
-            alert('Koneksi Gagal')
-        }
-    }
+    useEffect(() => {
+        Axios.get(`http://localhost:3000/siswa/${siswaId}`)
+            .then(response => {
+                const { status, message, data } = response.data
+                if (status === 'success') {
+                    setSiswa(data)
+                } else {
+                    alert(message)
+                }
+            })
+            .catch(error => {
+                alert(error)
+            })
+    }, [siswaId])
+
     return (
         <>
             <Container>
@@ -85,7 +85,7 @@ const TambahSiswa = () => {
                                     onChange={(e) => handleChange(e, 'alamat')} />
                             </Form.Group>
                         </Col>
-                    
+
                         <Col>
                             <Form.Group controlId="provinsi">
                                 <Form.Label>Provinsi</Form.Label>
@@ -124,14 +124,12 @@ const TambahSiswa = () => {
                             </Form.Group>
                         </Col>
                     </Row>
-
-
                 </Form>
-                <Button variant="secondary" onClick={()=> history.push('./siswa')}>Keluar</Button>
-                <Button variant="primary" onClick={handleSubmit}>Simpan</Button>
+                <Button variant="secondary" onClick={() => history.push('/siswa')}>Keluar</Button>
+                <Button variant="primary" >Simpan</Button>
             </Container>
         </>
     )
 }
 
-export default TambahSiswa;
+export default UbahSiswa;
