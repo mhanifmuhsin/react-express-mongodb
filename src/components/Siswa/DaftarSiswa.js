@@ -48,7 +48,7 @@ const DaftarSiswa = () => {
                                 <td>{siswa.kelas}</td>
                                 <td>
                                 <Button variant="info" onClick={handleShow}>Lihat</Button>
-                                <Button variant="warning">Edit</Button>
+                                <Button variant="warning"><a href="/siswa/ubah">Ubah</a></Button>
                                 <Button variant="danger">Hapus</Button> 
                                 </td>
                             </tr>

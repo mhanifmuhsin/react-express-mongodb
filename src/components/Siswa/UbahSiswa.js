@@ -1,45 +1,51 @@
 import Axios from 'axios';
-import React,{useState} from 'react';
-import { Button, Modal,Form, Row, Col} from 'react-bootstrap';
+import React, {  useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Button, Container, Form , Row, Col} from 'react-bootstrap';
 
-const TambahSiswa = ({ show, handleShow, handleClose }) => {
-    // const history = useHsitory();
-    const [siswa,setSiswa] = useState({
-        nama:'',
-        kelas:''
+const TambahSiswa = () => {
+    const history = useHistory();
+    const [siswa, setSiswa] = useState({
+        kk:'',
+        nik:'',
+        nama: '',
+        tempatLahir:'',
+        tanggalLahir:'',
+        alamat:'',
+        kelas: '',
+        provinsi: '',
+        kabkota: '',
+        kecamatan: '',
+        desakelurahan: '',
+        nis: '',
+        ayah: '',
+        ibu: ''
     })
 
-    const handleChange = (e,name) =>{
+    const handleChange = (e, name) => {
         const value = e.target.value
-        setSiswa({...siswa,[name]:value})
+        setSiswa({ ...siswa, [name]: value })
     }
 
-    const handleSubmit = async(e) =>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
+        try {
             const response = await
-            Axios.post('http://localhost:3000/siswa',siswa)
-            const{status,message} = response.data
-            if(status === 'success'){
+                Axios.post('http://localhost:3000/siswa', siswa)
+            const { status, message } = response.data
+            if (status === 'success') {
                 alert(message)
-            }else{
+                history.push('/siswa');
+            } else {
                 alert(message)
             }
-        }catch (error){
+        } catch (error) {
             alert('Koneksi Gagal')
         }
     }
     return (
         <>
-            <Modal
-             size="lg"
-             aria-labelledby="contained-modal-title-vcenter"
-             centered
-             show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Tambah Siswa</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
+            <Container>
                 <Form>
                     <Row>
                         <Col>
@@ -118,12 +124,12 @@ const TambahSiswa = ({ show, handleShow, handleClose }) => {
                             </Form.Group>
                         </Col>
                     </Row>
+
+
                 </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Keluar</Button>
-                </Modal.Footer>
-            </Modal>
+                <Button variant="secondary" onClick={()=> history.push('./siswa')}>Keluar</Button>
+                <Button variant="primary" onClick={handleSubmit}>Simpan</Button>
+            </Container>
         </>
     )
 }
